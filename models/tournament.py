@@ -1,43 +1,58 @@
 #!/usr/bin/python
 
-import db
+from .object import Object
 
-# tournoi = tournament.New('tournaments.csv',['id','name', 'location', 'startingDate', 'endingDate', 'roundQty', 'type', 'description'])
-# tournoi.create([{'name':'tournoi du jeudi', 'location':'ici', 'startingDate':'02/09/2022', 'endingDate':'02/09/2022',  'roundQty':3, 'type':'bullet', 'description':"un essai"}])
+class Tournament(Object):  # Tournament Class
+    __slots__ = ['name', 'location', 'startingDate', 'endingDate', 'roundQty', 'type', 'description']
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.doc_id = ''
 
-class New(db.New):  # Tournament Class
-    def load(self, name, startingDate, endingDate):
-        tournamentsList = self.read()
-        for tourney in tournamentsList:
-            if (name == tourney['name'] and
-                    startingDate == tourney['startingDate'] and
-                    endingDate == tourney['endingDate']):
-                self.id = tourney['id']
-                self.name = tourney['name']
-                self.location = tourney['location']
-                self.startingDate = tourney['startingDate']
-                self.endingDate = tourney['endingDate']
-                self.roundQty = tourney['roundQty']
-                self.type = tourney['type']  # bullet/blitz/coup rapide
-                self.description = tourney['description']
-                return True
-            else:
-                return False
+# getters and setters
+    def getId(self):
+        return self.doc_id
+    
+    def setId(self, id):
+        self.doc_id = id
 
-    def addRound(self, roundRef):
-        self.roundsRefsList.append(roundRef)
+    def getName(self):
+        return self.name
+    
+    def setName(self, name):
+        self.name = name
 
-    def getStandings(self):
-        return
+    def getLocation(self):
+        return self.location
+    
+    def setLocation(self, location):
+        self.location = location
 
-    def getPlayersReport(self, sorting):
-        return
+    def getStartingDate(self):
+        return self.startingDate
+    
+    def setStartingDate(self, startingDate):
+        self.startingDate = startingDate
 
-    def getTournamentsList(self):
-        return
+    def getEndingDate(self):
+        return self.endingDate
+    
+    def setEndingDate(self, endingDate):
+        self.endingDate = endingDate
 
-    def getTournamentRounds(self):
-        return self.rounds
+    def getRoundQty(self):
+        return self.roundQty
+    
+    def setRoundQty(self, roundQty):
+        self.roundQty = roundQty
 
-    def getTournamentGames(self):
-        return
+    def getType(self):
+        return self.type
+    
+    def setType(self, type):
+        self.type = type
+
+    def getDescription(self):
+        return self.description
+    
+    def setDescription(self, description):
+        self.description = description
