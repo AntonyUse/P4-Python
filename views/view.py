@@ -3,14 +3,13 @@
 #displayGeneralMenu :
 #Titre : Gérer vos tournois d'échec
 
-from struct import pack
 from models.object import Object
-import router
+from router import Router
 
 class View(Object):
     def __init__(self):
         super().__init__()
-        self.myRouter = router.Router
+        self.myRouter = Router()
         self.homeMenu = {  # 'id':['texte du menu', 'package.module', 'classe', 'methode']
             '1':['Créer un nouveau tournoi','views.tournamentView','TournamentView','displayCreationMenu'],
             '2':['Gérer votre tournoi en cours','views.tournamentView','TournamentView','displayCurrentMenu'],
@@ -18,7 +17,7 @@ class View(Object):
             '4':['Gérer les joueurs','views.tournamentView','TournamentView','displayOthersMenu'],
             '5':['Sortie','exit'],
         }
-
+ 
     def default(self):
         self.showMenu(self.homeMenu)
 
@@ -31,8 +30,7 @@ class View(Object):
             if choice in dict and dict[choice][1] != 'exit':
                 print(f"{dict[choice][0]} !")
 #                print(f"ca se passe ici !!!!! ====> {dict[choice][3]}")
-                myMethod = self.myRouter.go(dict[choice][1], dict[choice][2], dict[choice][3])
-                myMethod()
+                self.myRouter.go(dict[choice][1], dict[choice][2], dict[choice][3])()
                 
             elif choice in dict and dict[choice][1] == 'exit':
                 print('Au revoir !')

@@ -6,7 +6,7 @@ class TournamentView(View):
     def displayCreationMenu(self):
         thisMenu = {  # 'id':['texte du menu', 'package.module', 'classe', 'methode']
             '1':['Créer le tournoi','views.tournamentView','TournamentView','create'],
-            '2':['Ajouter les joueurs','views.tournamentView','TournamentView','addPlayers'],
+            '2':['Ajouter les joueurs','views.playerView','PlayerView','addToTournament'],
             '3':['Générer le 1er Round','views.roundView','RoundView','createFirst'],
             '4':['Revenir au menu principal','views.view','View','default'],
         }
@@ -51,8 +51,7 @@ class TournamentView(View):
 
         createTournamentMethod = self.myRouter.go('controllers.tournamentController','TournamentController','create')
         if (createTournamentMethod(name, location, startingDate, endingDate, roundQty, type, description)):
-            addPlayersMethod = self.myRouter.go('views.playersTournamentView','PlayersTournamentView','add')
-            addPlayersMethod()
+            self.myRouter.go('views.playersTournamentView','PlayersTournamentView','add')()
         else:
             print('Problème à la saisie des données')
 
@@ -64,7 +63,7 @@ class TournamentView(View):
         #endingDate
         #roundQty
         #type
-        #description
+        #description        
 
     def display():
         print("display")

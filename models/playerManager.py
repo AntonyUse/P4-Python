@@ -4,6 +4,9 @@ from .manager import Manager
 from .player import Player
 
 class PlayerManager(Manager):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        
 # CRUD
     def create(self,playerObj):
         dict = {

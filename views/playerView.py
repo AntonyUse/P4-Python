@@ -1,46 +1,29 @@
 #!/usr/bin/python
 
-from xml.dom.pulldom import END_ELEMENT
-import router
+from router import Router
+from models.tournamentManager import TournamentManager
+from models.playerManager import PlayerManager
+from views.view import View
 
-class PlayerView():
-    def create(self):
-        print("Nom du tournoi ?")
-        name = input()
-        print("Lieu du tournoi ?")
-        location = input()
-        print("Date de début ?")
-        startingDate = str(input())
-        print("Date de fin ?")
-        endingDate = str(input())
-        print("Nombre de Rounds ? (3 par défaut) ")
-        roundQty = input()
-        print("Type de tournoi ? (bullet, blitz, coup rapide)")
-        type = input()
-        print("Description ?")
-        description = input()
+class PlayerView(View):
+    def __init__(self):
+        self.TournamentManager = TournamentManager(file='db.json', dbTable='tournaments')
+        self.PlayerManager = PlayerManager(file='db.json',dbTable='players')
+        self.myRouter = Router()
 
-        myRouter = router.Router
-        myMethod = myRouter.go('controllers.tournamentController','TournamentController','create')
-        myMethod(name, location, startingDate, endingDate, roundQty, type, description)
+    def addToTournament(self):
+        self.displayAll()
+        print("Numéro du ou des joueur(s) à ajouter ? (séparés par une virgule, laisser vide pour revenir au menu)")
+        list = input()
+        if (list):
+            doc_ids = list.split(',')
+            currentTourney = self.TournamentManager.getLast()
+            self.myRouter.go('controllers.playerController','PlayerController','addToTournament')(doc_ids,currentTourney.getId())
+        else:
+            self.myRouter.go('views.tournamentView','TournamentView','displayCreationMenu')()
 
-        #capturer les input pour appeler tournamentController.createNewTournament() avec :
-        #name
-        #location
-        #startingDate
-        #endingDate
-        #roundQty
-        #type
-        #description
 
-    def display():
-        print("display")
-        #lister les tournois
-        #capturer les input pour appeler tournamentController.createNewTournament() avec :
-        #name
-        #location
-        #startingDate
-        #endingDate
-        #roundQty
-        #type
-        #description
+
+    def displayAll(self):
+        for player in self.PlayerManager.getAll():
+            print(f"{player.getId()} : {player.getName()} {player.getFirstname()}")

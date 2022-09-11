@@ -3,8 +3,10 @@
 from .db import Db
 
 class Manager(Db):
+    __slots__ = 'dbTable'
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.table = self.db.table(self.dbTable)
     
     def create(self,dict):
         return self.table.insert(dict)

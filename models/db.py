@@ -4,11 +4,11 @@ from .object import Object
 from tinydb import TinyDB
 
 class Db(Object):
-    __slots__= ['file', 'dbTable']
+    __slots__= 'file'
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.db = TinyDB(self.file)
-        self.table = self.db.table(self.dbTable)
+        
 
     def getDb(self):
         return self.db
