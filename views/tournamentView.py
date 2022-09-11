@@ -1,9 +1,38 @@
 #!/usr/bin/python
 
-from xml.dom.pulldom import END_ELEMENT
-import router
+from views.view import View
 
-class TournamentView():
+class TournamentView(View):
+    def displayCreationMenu(self):
+        thisMenu = {  # 'id':['texte du menu', 'package.module', 'classe', 'methode']
+            '1':['Créer le tournoi','views.tournamentView','TournamentView','create'],
+            '2':['Ajouter les joueurs','views.tournamentView','TournamentView','addPlayers'],
+            '3':['Générer le 1er Round','views.roundView','RoundView','createFirst'],
+            '4':['Revenir au menu principal','views.view','View','default'],
+        }
+        self.showMenu(thisMenu)
+
+    def displayCurrentMenu(self):
+        thisMenu = {  # 'id':['texte du menu', 'package.module', 'classe', 'methode']
+            '1':['Sélectionner le tournoi en cours','views.tournamentView','TournamentView','create'],
+            '2':['Sélectionner un Round du tournoi en cours','views.tournamentView','TournamentView','addPlayers'],
+            '3':['Créer un nouveau Round','views.roundView','RoundView','createFirst'],
+            '4':['Gérer les matchs','views.view','View','default'],
+            '5':['Gérer les joueurs du tournoi en cours','views.view','View','default'],
+            '6':['Statistiques du tournoi en cours','views.view','View','default'],
+            '7':['Revenir au menu principal','views.view','View','default'],
+        }
+        self.showMenu(thisMenu)
+
+    def displayOthersMenu(self):
+        thisMenu = {  # 'id':['texte du menu', 'package.module', 'classe', 'methode']
+            '1':['Lister les tournois','views.tournamentView','TournamentView','create'],
+            '2':["Lister les rounds d'un tournoi",'views.tournamentView','TournamentView','addPlayers'],
+            '3':["Lister les matchs d'un tournoi",'views.roundView','RoundView','createFirst'],
+            '4':['Revenir au menu principal','views.view','View','default'],
+        }
+        self.showMenu(thisMenu)
+
     def create(self):
         print("Nom du tournoi ?")
         name = input()
@@ -20,9 +49,13 @@ class TournamentView():
         print("Description ?")
         description = input()
 
-        myRouter = router.Router
-        myMethod = myRouter.go('controllers.tournamentController','TournamentController','create')
-        myMethod(name, location, startingDate, endingDate, roundQty, type, description)
+        createTournamentMethod = self.myRouter.go('controllers.tournamentController','TournamentController','create')
+        if (createTournamentMethod(name, location, startingDate, endingDate, roundQty, type, description)):
+            addPlayersMethod = self.myRouter.go('views.playersTournamentView','PlayersTournamentView','add')
+            addPlayersMethod()
+        else:
+            print('Problème à la saisie des données')
+
 
         #capturer les input pour appeler tournamentController.createNewTournament() avec :
         #name

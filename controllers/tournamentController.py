@@ -14,11 +14,10 @@ class TournamentController(Controller):
         if (
             name and 
             location and 
-            self.is_date(startingDate) and 
-            self.is_date(endingDate) and 
-            isinstance(roundQty) and 
-            
-            type in ['bullet', 'blitz', 'coup rapide'] and description
+            startingDate and 
+            isinstance(roundQty, int) and             
+            type in ['bullet', 'blitz', 'coup rapide'] and 
+            description
             ):
             try:
                 self.tournament = Tournament(
@@ -30,10 +29,11 @@ class TournamentController(Controller):
                     type=type,
                     description=description
                     )
-                return '1.2'
+                return True
             except ValueError:
                 return "Impossible de créer le tournoi"
-
+        else:
+            return False
 
 
 #list = tourneyManager.getAll()

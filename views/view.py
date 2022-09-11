@@ -8,6 +8,20 @@ from models.object import Object
 import router
 
 class View(Object):
+    def __init__(self):
+        super().__init__()
+        self.myRouter = router.Router
+        self.homeMenu = {  # 'id':['texte du menu', 'package.module', 'classe', 'methode']
+            '1':['Créer un nouveau tournoi','views.tournamentView','TournamentView','displayCreationMenu'],
+            '2':['Gérer votre tournoi en cours','views.tournamentView','TournamentView','displayCurrentMenu'],
+            '3':['Gérer les autres tournois','views.tournamentView','TournamentView','displayOthersMenu'],
+            '4':['Gérer les joueurs','views.tournamentView','TournamentView','displayOthersMenu'],
+            '5':['Sortie','exit'],
+        }
+
+    def default(self):
+        self.showMenu(self.homeMenu)
+
     def showMenu(self, dict):
         print("Welcome to Our Website")
         for key,value in dict.items(): # Loop to print all Choises and key of choise ! 
@@ -16,9 +30,8 @@ class View(Object):
             choice = input()
             if choice in dict and dict[choice][1] != 'exit':
                 print(f"{dict[choice][0]} !")
-                myRouter = router.Router
 #                print(f"ca se passe ici !!!!! ====> {dict[choice][3]}")
-                myMethod = myRouter.go(dict[choice][1], dict[choice][2], dict[choice][3])
+                myMethod = self.myRouter.go(dict[choice][1], dict[choice][2], dict[choice][3])
                 myMethod()
                 
             elif choice in dict and dict[choice][1] == 'exit':
@@ -64,9 +77,7 @@ class View(Object):
         #2.6.1. Liste du classement en cours pour le dernier round du tournoi en cours
 #3. Gérer les autres tournois
     #3.1. Lister les tournois
-        #3.1.1. Sélection du tournoi
-            #3.1.1.1. Affichage du tournoi
-            #3.1.1.2. Retour au menu 3.1.1.
+        #3.1.1. Affichage du tournoi
         #3.1.2. Retour au menu 3
     #3.2. Lister les rounds d'un tournoi
         #3.2.1. Sélection du tournoi

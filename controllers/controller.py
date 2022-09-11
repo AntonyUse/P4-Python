@@ -7,7 +7,7 @@ class Controller(object.Object):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def is_date(string, fuzzy=False):
+    def is_date(string, fuzzy=True):
         try: 
             parse(string, fuzzy=fuzzy)
             return True
