@@ -5,16 +5,24 @@
 
 from models.object import Object
 from router import Router
+from models.tournamentManager import TournamentManager
+from models.playerManager import PlayerManager
+from models.roundManager import RoundManager
+from models.gameManager import GameManager
 
 class View(Object):
     def __init__(self):
         super().__init__()
         self.myRouter = Router()
+        self.TournamentManager = TournamentManager(file='db.json', dbTable='tournaments')
+        self.PlayerManager = PlayerManager(file='db.json',dbTable='players')
+        self.RoundManager = RoundManager(file='db.json',dbTable='rounds')
+        self.GameManager = GameManager(file='db.json',dbTable='games')
         self.homeMenu = {  # 'id':['texte du menu', 'package.module', 'classe', 'methode']
             '1':['Créer un nouveau tournoi','views.tournamentView','TournamentView','displayCreationMenu'],
             '2':['Gérer votre tournoi en cours','views.tournamentView','TournamentView','displayCurrentMenu'],
             '3':['Gérer les autres tournois','views.tournamentView','TournamentView','displayOthersMenu'],
-            '4':['Gérer les joueurs','views.tournamentView','TournamentView','displayOthersMenu'],
+            '4':['Gérer les joueurs','views.playerView','PlayerView','playersMenu'],
             '5':['Sortie','exit'],
         }
  

@@ -1,15 +1,13 @@
 #!/usr/bin/python
 
-from router import Router
-from models.tournamentManager import TournamentManager
-from models.playerManager import PlayerManager
 from views.view import View
 
 class PlayerView(View):
     def __init__(self):
-        self.TournamentManager = TournamentManager(file='db.json', dbTable='tournaments')
-        self.PlayerManager = PlayerManager(file='db.json',dbTable='players')
-        self.myRouter = Router()
+        super().__init__()
+
+    def playersMenu(self):
+        print('Menu Joueurs')
 
     def addToTournament(self):
         self.displayAll()
