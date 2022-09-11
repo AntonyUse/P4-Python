@@ -10,7 +10,7 @@ class TournamentController(Controller):
         self.tournamentManager = TournamentManager(file='db.json', dbTable='tournaments')
 
     # from Menu 1.1 to Menu 1.2
-    def createNewTournament(self, name, location, startingDate, endingDate, roundQty, type, description):
+    def create(self, name, location, startingDate, endingDate, roundQty, type, description):
         if (
             name and 
             location and 

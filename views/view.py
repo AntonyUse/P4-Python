@@ -3,23 +3,11 @@
 #displayGeneralMenu :
 #Titre : Gérer vos tournois d'échec
 
+from struct import pack
 from models.object import Object
-import importlib
-import pathlib
-
-class Menu():
-    def menuChoice(self,controllerName, controllerMethod):
-        method=getattr(self,str(controllerMethod),lambda :'Invalid')
-        return str(controllerName).method()
-
+import router
 
 class View(Object):
-    def myImport(self,name):
-        components = name.split('.')
-        mod = importlib.import_module(f"{components[0]}.{components[1]}")
-        #mod = getattr(mod, components[2:])
-        return mod
-
     def showMenu(self, dict):
         print("Welcome to Our Website")
         for key,value in dict.items(): # Loop to print all Choises and key of choise ! 
@@ -28,12 +16,10 @@ class View(Object):
             choice = input()
             if choice in dict and dict[choice][1] != 'exit':
                 print(f"{dict[choice][0]} !")
-                #myMenu = Menu()
-                #Klass = self.myImport(dict[choice][1])
-                Klass = __import__(dict[choice][1])
-                print(Klass)
-                #obj = Klass()
-                #obj.dict[choice][2]
+                myRouter = router.Router
+#                print(f"ca se passe ici !!!!! ====> {dict[choice][3]}")
+                myMethod = myRouter.go(dict[choice][1], dict[choice][2], dict[choice][3])
+                myMethod()
                 
             elif choice in dict and dict[choice][1] == 'exit':
                 print('Au revoir !')
