@@ -3,6 +3,45 @@
 #displayGeneralMenu :
 #Titre : Gérer vos tournois d'échec
 
+from models.object import Object
+import importlib
+import pathlib
+
+class Menu():
+    def menuChoice(self,controllerName, controllerMethod):
+        method=getattr(self,str(controllerMethod),lambda :'Invalid')
+        return str(controllerName).method()
+
+
+class View(Object):
+    def myImport(self,name):
+        components = name.split('.')
+        mod = importlib.import_module(f"{components[0]}.{components[1]}")
+        #mod = getattr(mod, components[2:])
+        return mod
+
+    def showMenu(self, dict):
+        print("Welcome to Our Website")
+        for key,value in dict.items(): # Loop to print all Choises and key of choise ! 
+            print(f"{key} - {value[0]}")
+        while True:
+            choice = input()
+            if choice in dict and dict[choice][1] != 'exit':
+                print(f"{dict[choice][0]} !")
+                #myMenu = Menu()
+                #Klass = self.myImport(dict[choice][1])
+                Klass = __import__(dict[choice][1])
+                print(Klass)
+                #obj = Klass()
+                #obj.dict[choice][2]
+                
+            elif choice in dict and dict[choice][1] == 'exit':
+                print('Au revoir !')
+                exit(0)
+            else:
+                print('Choix inconnu')
+
+
 #1. Créer un nouveau tournoi
     #1.1. Saisie des paramètres du tournoi => renvoi au menu 1.2
     #1.2. Ajouter des joueurs au tournoi

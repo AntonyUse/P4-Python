@@ -1,6 +1,13 @@
 #!/usr/bin/python
 
-from models import db, tournament, tournamentManager, round, roundManager
-from views import menu
+from views.view import View
 
-menu.show_menu()
+homeMenu = {
+    '1':['Créer un nouveau tournoi','controllers.tournamentController','TournamentController','createNewTournament'],
+    '2':['Gérer votre tournoi en cours',''],
+    '3':['Gérer les autres tournois',''],
+    '4':['Sortie','exit'],
+}
+
+myView = View()
+myView.showMenu(homeMenu)
