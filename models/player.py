@@ -3,12 +3,12 @@
 from .object import Object
 
 class Player(Object):  # Player Class
-    __slots__ = ['name', 'firstname', 'birthdate', 'gender', 'level',]
+    __slots__ = ['name', 'firstname', 'birthdate', 'gender', 'level']
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.doc_id = ''
 
-# getters and setters
+    # getters and setters
     def getId(self):
         return self.doc_id
     

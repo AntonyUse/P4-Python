@@ -11,12 +11,13 @@ class TournamentController(Controller):
 
     # from Menu 1.1 to Menu 1.2
     def create(self, name, location, startingDate, endingDate, roundQty, type, description):
+        typeList = ['bullet', 'blitz', 'coup rapide']
         if (
             name and 
             location and 
             startingDate and 
             isinstance(roundQty, int) and             
-            type in ['bullet', 'blitz', 'coup rapide'] and 
+            typeList.count(type) > 0 and 
             description
             ):
             try:
@@ -29,6 +30,7 @@ class TournamentController(Controller):
                     type=type,
                     description=description
                     )
+                self.tournamentManager.create(self.tournament)
                 return True
             except ValueError:
                 return "Impossible de créer le tournoi"

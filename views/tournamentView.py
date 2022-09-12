@@ -3,6 +3,9 @@
 from views.view import View
 
 class TournamentView(View):
+    def __init__(self):
+        super().__init__()
+
     def displayCreationMenu(self):
         thisMenu = {  # 'id':['texte du menu', 'package.module', 'classe', 'methode']
             '1':['Créer le tournoi','views.tournamentView','TournamentView','create'],
@@ -14,8 +17,8 @@ class TournamentView(View):
 
     def displayCurrentMenu(self):
         thisMenu = {  # 'id':['texte du menu', 'package.module', 'classe', 'methode']
-            '1':['Sélectionner le tournoi en cours','views.tournamentView','TournamentView','create'],
-            '2':['Sélectionner un Round du tournoi en cours','views.tournamentView','TournamentView','addPlayers'],
+            '1':['Sélectionner le tournoi en cours','views.tournamentView','TournamentView','selectCurrentTournament'],
+            '2':['Sélectionner un Round du tournoi en cours','views.tournamentView','TournamentView','selectCurrentRound'],
             '3':['Créer un nouveau Round','views.roundView','RoundView','createFirst'],
             '4':['Gérer les matchs','views.view','View','default'],
             '5':['Gérer les joueurs du tournoi en cours','views.view','View','default'],
@@ -43,7 +46,7 @@ class TournamentView(View):
         print("Date de fin ?")
         endingDate = str(input())
         print("Nombre de Rounds ? (3 par défaut) ")
-        roundQty = input()
+        roundQty = int(input())
         print("Type de tournoi ? (bullet, blitz, coup rapide)")
         type = input()
         print("Description ?")
@@ -54,6 +57,30 @@ class TournamentView(View):
             self.myRouter.go('views.playersTournamentView','PlayersTournamentView','add')()
         else:
             print('Problème à la saisie des données')
+
+    def displayAll(self):
+        for tourney in self.TournamentManager.getAll():
+            print(f"{tourney.getId()} : {tourney.getName()}")
+
+    def displayAllRoundsFromCurrentTournament(self, id):
+        print(f"Tournoi n° {id} !")
+        if (self.RoundManager.getAllFromCurrentTournament(id)):
+            for round in self.RoundManager.getAllFromCurrentTournament(id):
+                print(f"{round.getId()} : {round.getName()}")
+        else:
+            print("Créez d'abord un nouveau Round pour ce tournoi !")
+            self.myRouter.go('views.roundView','RoundView','create')()
+
+    def selectCurrentTournament(self):
+        self.displayAll()
+        print("Indiquez le numéro du Tournoi")
+        return int(input())
+
+    def selectCurrentRound(self):
+        tournamentId = self.selectCurrentTournament()
+        self.displayAllRoundsFromCurrentTournament(tournamentId)
+        print("Indiquez le numéro du Round")
+        return int(input())
 
 
         #capturer les input pour appeler tournamentController.createNewTournament() avec :

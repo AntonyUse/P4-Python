@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 from .db import Db
+from tinydb import Query
 
 class Manager(Db):
     __slots__ = 'dbTable'
@@ -20,8 +21,11 @@ class Manager(Db):
     def getLast(self):
         return self.table.all()[-1]
 
+    def getAllFromKey(self,key, value):
+        return self.table.search(Query()[key] == value)
+
     def update(self, dict, id):
-        return self.table.update(dict, doc_ids=[id])
+        return self.table.update(dict, doc_ids=[int(id)])
 
     def delete(self,id):
-        return self.table.remove(doc_ids=[id])
+        return self.table.remove(doc_ids=[int(id)])

@@ -37,6 +37,15 @@ class RoundManager(Manager):
             roundsList.append(tour)
         return roundsList
 
+    def getAllFromCurrentTournament(self, tournamentId):
+        rows = super().getAllFromKey('tournament_id', tournamentId)
+        roundsList = []
+        for row in rows:
+            tour = Round(**row)
+            tour.setId(row.doc_id)
+            roundsList.append(tour)
+        return roundsList
+
     def update(self,roundObj):
         return super().update({
             'tournament_id':roundObj.getTournamentId(),
